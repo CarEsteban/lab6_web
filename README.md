@@ -55,8 +55,14 @@ Este proyecto consiste en el desarrollo de un backend en **Go (Golang)** para la
 2. Construir y ejecutar la imagen Docker:
 
 ```bash
-  docker-compose up --build
+  docker compose up --build
 
+```
+
+2.1 Si ya inicializó la base de datos, puede ejecutar el siguiente comando:
+
+```bash
+  docker compose down -v
 ```
 
 3. Acceder al frontend:

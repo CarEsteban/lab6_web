@@ -1,2 +1,5 @@
-docker-compose.yml
+# Ignorar el archivo .env
 .env
+
+# Ignorar docker-compose.yml
+docker-compose.yml
