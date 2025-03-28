@@ -1,6 +1,10 @@
 # Laboratorio 6 - Desarrollo de Backend para La Liga Tracker
 
-![Captura de Funcionamiento](./pictures/250327_21h16m17s_screenshot.png)
+![Captura de Funcionamiento 1](./pictures/250327_21h16m17s_screenshot.png)
+
+![Captura de Funcionamiento 2](./pictures/250327_21h43m50s_screenshot.png)
+
+![Captura de Funcionamiento 3](./pictures/250327_21h44m11s_screenshot.png)
 
 ## Descripción del Proyecto
 
