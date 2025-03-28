@@ -60,3 +60,40 @@ Este proyecto consiste en el desarrollo de un backend en **Go (Golang)** para la
    El backend estará disponible en http://localhost:8080/api/matches.
 
    Tambien con el frontend en http://localhost:8080/
+
+## Desarrollo Local (sin Docker)
+
+1. **Iniciar la base de datos**:
+
+```bash
+docker-compose up db
+```
+
+2. Ejecutar el backend:
+
+```bash
+go run cmd/main.go
+```
+
+### Endpoints de la API
+
+| Método     | Endpoint            | Descripción                    |
+| ---------- | ------------------- | ------------------------------ |
+| **GET**    | `/api/matches`      | Obtiene todos los partidos     |
+| **GET**    | `/api/matches/{id}` | Obtiene un partido por ID      |
+| **POST**   | `/api/matches`      | Crea un nuevo partido          |
+| **PUT**    | `/api/matches/{id}` | Actualiza un partido existente |
+| **DELETE** | `/api/matches/{id}` | Elimina un partido             |
+
+## Configuración de la Base de Datos
+
+**Motor:** PostgreSQL
+
+**Variables de entorno** (definidas en `docker-compose.yml`):
+
+```bash
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=yourpassword
+POSTGRES_DB=lab6_laliga
+
+```
