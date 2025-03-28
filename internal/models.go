@@ -54,15 +54,17 @@ func CreateMatch(m Match) (int, error) {
 }
 
 //funcion para actualizar un partido existente
+
 func UpdateMatch(m Match) error {
     query := `
         UPDATE matches
-        SET home_team=$1, away_team=$2, match_date=$3
-        WHERE id=$4
+        SET home_team = $1, away_team = $2, match_date = $3
+        WHERE id = $4
     `
     _, err := DB.Exec(query, m.HomeTeam, m.AwayTeam, m.MatchDate, m.ID)
     return err
 }
+
 
 //funcion para eliminar un partido
 func DeleteMatch(id int) error {
