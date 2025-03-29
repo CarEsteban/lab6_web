@@ -2,6 +2,7 @@ package internal
 
 import (
   "time"
+  "fmt"
 )
 
 
@@ -74,4 +75,41 @@ func DeleteMatch(id int) error {
     `
     _, err := DB.Exec(query, id)
     return err
+}
+
+// UpdateGoals actualiza el campo goals_match para el partido dado.
+func UpdateGoals(id int) error {
+	query := "UPDATE matches SET goals_match = goals_match + 1 WHERE id = $1"
+	_, err := DB.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("error al incrementar goles: %v", err)
+	}
+	return nil
+}
+
+func UpdateYellowCards(id int) error {
+	query := "UPDATE matches SET yellow_cards_match = yellow_cards_match + 1 WHERE id = $1"
+	_, err := DB.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("error al incrementar tarjeta amarilla: %v", err)
+	}
+	return nil
+}
+
+func UpdateRedCards(id int) error {
+	query := "UPDATE matches SET red_cards_match = red_cards_match + 1 WHERE id = $1"
+	_, err := DB.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("error al incrementar tarjeta roja: %v", err)
+	}
+	return nil
+}
+
+func UpdateExtraTime(id int) error {
+	query := "UPDATE matches SET extra_time = TRUE WHERE id = $1"
+	_, err := DB.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("error al establecer tiempo extra: %v", err)
+	}
+	return nil
 }

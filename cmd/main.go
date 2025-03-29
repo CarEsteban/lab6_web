@@ -141,7 +141,87 @@ func deleteMatch(c *gin.Context) {
   c.JSON(http.StatusOK, gin.H{"message": "Partido eliminado"})
 }
 
+func updateGoals(c *gin.Context){
 
+
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		return
+	}
+
+	// Llamamos a la función que incrementa el gol en la base de datos.
+	if err := internal.UpdateGoals(id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Gol incrementado correctamente"})
+
+
+}
+
+
+func updateYellowCards(c *gin.Context){
+
+
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		return
+	}
+
+	if err := internal.UpdateYellowCards(id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Tarjeta amarrilla incrementada correctamente"})
+
+
+}
+
+func updateRedCards(c *gin.Context){
+
+
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		return
+	}
+
+	if err := internal.UpdateRedCards(id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Tarjeta roja incrementada correctamente"})
+
+
+}
+
+func updateExtraTime(c *gin.Context){
+
+
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		return
+	}
+
+	if err := internal.UpdateExtraTime(id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Tiempo extra incrementada correctamente"})
+
+
+}
 
 func main() {
   //cone con la BD
@@ -158,6 +238,10 @@ func main() {
     api.POST("/matches", createMatch)
     api.PUT("/matches/:id", updateMatch)
     api.DELETE("/matches/:id", deleteMatch)
+    api.PATCH("/matches/:id/goals", updateGoals)
+    api.PATCH("/matches/:id/yellowcards", updateYellowCards)
+    api.PATCH("/matches/:id/redcards", updateRedCards)
+    api.PATCH("/matches/:id/extratime", updateExtraTime)
   }
   
   if err := router.Run(":8080"); err != nil {
