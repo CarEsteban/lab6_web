@@ -36,6 +36,10 @@ Este proyecto consiste en el desarrollo de un backend en **Go (Golang)** para la
 └── README.md
 ```
 
+## Coleccion de Postman
+
+[Colección de Postman para la API](./postman/postman_collection.json)
+
 ## Instalación y Uso
 
 ### Prerrequisitos
