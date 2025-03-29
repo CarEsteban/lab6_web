@@ -1,0 +1,225 @@
+basePath: /api
+definitions:
+  internal.Match:
+    description: Objeto que modela un partido, incluyendo equipos y fecha.
+    properties:
+      awayTeam:
+        type: string
+      homeTeam:
+        type: string
+      id:
+        type: integer
+      matchDate:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: car23016@uvg.edu.gt
+    name: Esteban Carcamo
+  description: API para gestionar los partidos de La Liga.
+  title: La Liga Tracker API
+  version: "1.0"
+paths:
+  /matches:
+    get:
+      description: Realiza una consulta a la tabla "matches" y retorna una lista de
+        partidos.
+      responses:
+        "200":
+          description: Lista de partidos
+          schema:
+            items:
+              $ref: '#/definitions/internal.Match'
+            type: array
+        "500":
+          description: Error interno
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Obtiene todos los partidos
+    post:
+      description: Inserta en la tabla "matches" un nuevo registro y retorna su ID.
+      parameters:
+      - description: Objeto Match sin ID
+        in: body
+        name: m
+        required: true
+        schema:
+          $ref: '#/definitions/internal.Match'
+      responses:
+        "201":
+          description: ID del partido creado
+          schema:
+            type: int
+        "500":
+          description: Error al crear el partido
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Crea un nuevo partido
+  /matches/{id}:
+    delete:
+      description: Elimina el registro de la tabla "matches" correspondiente al ID
+        proporcionado.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Partido eliminado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al eliminar el partido
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Elimina un partido
+    get:
+      description: Realiza una consulta para obtener un partido específico mediante
+        su ID.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Partido encontrado
+          schema:
+            $ref: '#/definitions/internal.Match'
+        "404":
+          description: Partido no encontrado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Obtiene un partido por ID
+    put:
+      description: Actualiza los campos home_team, away_team y match_date para un
+        partido dado.
+      parameters:
+      - description: Objeto Match con ID y datos actualizados
+        in: body
+        name: m
+        required: true
+        schema:
+          $ref: '#/definitions/internal.Match'
+      responses:
+        "200":
+          description: Partido actualizado correctamente
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al actualizar el partido
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Actualiza un partido
+  /matches/{id}/extratime:
+    patch:
+      description: Establece el valor de "extra_time" en TRUE para el partido especificado.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Tiempo extra establecido correctamente
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al establecer tiempo extra
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Activa tiempo extra
+  /matches/{id}/goals:
+    patch:
+      description: Incrementa el valor de "goals_match" en 1 para el partido especificado.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Gol incrementado correctamente
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al incrementar goles
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Incrementa goles del partido
+  /matches/{id}/redcards:
+    patch:
+      description: Incrementa el valor de "red_cards_match" en 1 para el partido especificado.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Tarjeta roja incrementada correctamente
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al incrementar tarjeta roja
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Incrementa tarjetas rojas
+  /matches/{id}/yellowcards:
+    patch:
+      description: Incrementa el valor de "yellow_cards_match" en 1 para el partido
+        especificado.
+      parameters:
+      - description: ID del partido
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Tarjeta amarilla incrementada correctamente
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error al incrementar tarjeta amarilla
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Incrementa tarjetas amarillas
+swagger: "2.0"

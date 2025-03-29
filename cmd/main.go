@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-
+  _ "lab6/docs" // Asegúrate de que el path sea correcto
+  ginSwagger "github.com/swaggo/gin-swagger"
+  swaggerFiles "github.com/swaggo/files"
 	"github.com/gin-gonic/gin"
 	"lab6/internal"
 )
@@ -321,6 +323,8 @@ func main() {
 		api.PATCH("/matches/:id/redcards", updateRedCards)
 		api.PATCH("/matches/:id/extratime", updateExtraTime)
 	}
+
+  router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v", err)

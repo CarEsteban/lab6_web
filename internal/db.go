@@ -20,7 +20,6 @@ var DB *sql.DB
 // @Produce plain
 // @Success 200 {string} string "Conexión exitosa a la base de datos"
 // @Failure 500 {string} string "No se pudo conectar a la base de datos después de varios intentos"
-// @Router / [ignore]
 func InitDB() error {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
