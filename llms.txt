@@ -1,0 +1,96 @@
+
+Documentación de Uso de la API - La Liga Tracker
+================================================
+
+1. Descripción General
+----------------------
+La API de La Liga Tracker permite gestionar la información de los partidos de La Liga.
+Con ella, se pueden realizar operaciones CRUD (crear, leer, actualizar y eliminar partidos)
+y actualizaciones parciales mediante endpoints PATCH para incrementar goles, registrar tarjetas amarillas,
+registrar tarjetas rojas y activar el tiempo extra.
+
+2. Endpoints Disponibles
+------------------------
+- **GET /api/matches**  
+  Retorna la lista de todos los partidos registrados en la base de datos.
+
+- **GET /api/matches/:id**  
+  Retorna la información de un partido específico, identificado por su ID.
+
+- **POST /api/matches**  
+  Crea un nuevo partido.  
+  **Requerimientos:**  
+  - Enviar un objeto JSON con:
+    - `homeTeam` (string)
+    - `awayTeam` (string)
+    - `matchDate` (string, formato YYYY-MM-DD)
+
+- **PUT /api/matches/:id**  
+  Actualiza completamente los datos de un partido existente.  
+  **Requerimientos:**  
+  - Enviar un objeto JSON con los mismos campos que en POST, junto con el ID.
+
+- **DELETE /api/matches/:id**  
+  Elimina un partido de la base de datos, identificado por su ID.
+
+- **PATCH /api/matches/:id/goals**  
+  Incrementa en 1 el valor del campo `goals_match` del partido identificado por su ID.
+
+- **PATCH /api/matches/:id/yellowcards**  
+  Incrementa en 1 el valor del campo `yellow_cards_match` del partido identificado por su ID.
+
+- **PATCH /api/matches/:id/redcards**  
+  Incrementa en 1 el valor del campo `red_cards_match` del partido identificado por su ID.
+
+- **PATCH /api/matches/:id/extratime**  
+  Establece el campo `extra_time` a `TRUE` para indicar que se jugó tiempo extra en el partido.
+
+3. Ejemplos de Uso
+------------------
+- **Incrementar un gol:**
+  
+  curl -X PATCH http://localhost:8080/api/matches/1/goals \
+       -H "Content-Type: application/json" \
+       -d '{}'
+  **Crear un partido:**
+
+  curl -X POST http://localhost:8080/api/matches \
+     -H "Content-Type: application/json" \
+     -d '{"homeTeam": "Barcelona", "awayTeam": "Real Madrid", "matchDate": "2025-04-01"}'
+
+  **Obtener todos los partidos:**
+  curl http://localhost:8080/api/matches
+
+  **Actualizar un partido:**
+  curl -X PUT http://localhost:8080/api/matches/1 \
+     -H "Content-Type: application/json" \
+     -d '{"homeTeam": "Barcelona", "awayTeam": "Real Madrid", "matchDate": "2025-04-01"}'
+
+  **Eliminar un partido:**
+  curl -X DELETE http://localhost:8080/api/matches/1
+
+
+4. Requisitos y Configuración
+------------------
+Formato de fecha: La API espera que las fechas se envíen en formato YYYY-MM-DD.
+
+Puerto de ejecución: La aplicación se ejecuta en el puerto 8080.
+
+Base de datos: Se utiliza PostgreSQL como motor de base de datos. La conexión se configura mediante variables de entorno (por ejemplo, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD y DB_NAME).
+
+Documentación interactiva: La documentación completa y la posibilidad de probar la API de forma interactiva están disponibles en Swagger en http://localhost:8080/swagger/index.html.
+
+5. Manejo de errores
+------------------
+
+La API responde con códigos de estado HTTP adecuados:
+
+    200 OK para solicitudes exitosas.
+
+    201 Created cuando se crea un nuevo recurso.
+
+    400 Bad Request para errores en la solicitud (por ejemplo, formato de fecha incorrecto o datos faltantes).
+
+    500 Internal Server Error para errores del servidor.
+
+Los mensajes de error se devuelven en formato JSON, permitiendo identificar la causa del fallo.
