@@ -8,6 +8,7 @@ import (
   _ "lab6/docs" // Asegúrate de que el path sea correcto
   ginSwagger "github.com/swaggo/gin-swagger"
   swaggerFiles "github.com/swaggo/files"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"lab6/internal"
 )
@@ -308,6 +309,21 @@ func main() {
 
 	router := gin.Default()
 
+	// Configurar CORS
+	router.Use(cors.New(cors.Config{
+		// Permite solicitudes desde los orígenes indicados. Puedes usar "*" para permitir cualquier origen, pero es más seguro especificar solo los necesarios.
+		AllowOrigins: []string{"http://localhost:3000", "https://23016.escudevwork.lat"},
+		// Métodos HTTP permitidos.
+		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		// Encabezados permitidos en la solicitud.
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+		// Encabezados que se exponen en la respuesta.
+		ExposeHeaders: []string{"Content-Length"},
+		// Permite el envío de cookies, autenticación y otros encabezados de credenciales.
+		AllowCredentials: true,
+		// Tiempo máximo para que se considere válida una solicitud preflight.
+		MaxAge: 12 * time.Hour,
+	}))
 	// Servir el archivo HTML en la raíz
 	router.StaticFile("/", "./LaLigaTracker.html")
 
